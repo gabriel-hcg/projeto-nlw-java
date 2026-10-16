@@ -88,6 +88,24 @@ The registration response contains the subscription number and a
 referral link (`designation`). The domain in the link is a placeholder
 from the course.
 
+## Known issues
+
+Found while reviewing the code. Not yet verified with tests or fixed:
+
+- **Registering a new user:** in `SubscriptionService.createNewSubscription`,
+  the user saved to the database is stored in a different variable from
+  the one later set as the subscriber. The registration of a user whose
+  email is not yet in the database may fail.
+- **Ranking with few referrers:** `GET /subscription/{prettyName}/ranking`
+  returns `subList(0, 3)`, which throws an error if the event has fewer
+  than 3 referrers.
+- **No automated tests:** the only test is the default `contextLoads`.
+
+## Next steps
+
+- Reproduce the issues above with Postman
+- Fix them and add tests for the registration and ranking logic
+
 ## What I practiced
 
 - Layered architecture: controller, service and repository
